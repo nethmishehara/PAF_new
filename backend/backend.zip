@@ -1,0 +1,1 @@
+{"timestamp":"2025-03-29T14:22:57.121+00:00","status":400,"error":"Bad Request","message":"Unknown dependency 'mongodb' check project metadata","path":"/starter.zip"}
