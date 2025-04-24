@@ -1,7 +1,8 @@
 
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './learningPlan1.css';
+import axios from 'axios'; // ← Import Axios
 
 // Main Dashboard
 function LearningPlansDashboard() {
@@ -9,30 +10,22 @@ function LearningPlansDashboard() {
   const [isEditingPlan, setIsEditingPlan] = useState(false);
   const [currentPlanId, setCurrentPlanId] = useState(null);
   const [existingPlans, setExistingPlans] = useState([
-    { 
-      id: 1, 
-      title: 'Learn React', 
-      status: 'Published', 
-      startDate: '2025-03-20', 
-      endDate: '2025-04-10', 
-      resources: [{ name: 'React Docs', checked: false }, { name: 'React Tutorial', checked: false }] 
-    },
-    { 
-      id: 2, 
-      title: 'Master Python', 
-      status: 'Published', 
-      startDate: '2025-03-15', 
-      endDate: '2025-04-05', 
-      resources: [{ name: 'Python Docs', checked: false }, { name: 'Python Tutorials', checked: false }] 
-    },
-    { 
-      id: 3, 
-      title: 'JavaScript Fundamentals', 
-      status: 'Ongoing', 
-      startDate: '2025-03-18', 
-      endDate: '2025-03-30', 
-      resources: [{ name: 'JS Guide', checked: false }, { name: 'MDN Docs', checked: true }] 
-    }  ]);
+     
+     ]);
+
+     const BASE_URL = "http://localhost:8080/api/learningplans"; 
+
+// 🔁 Fetch plans on mount
+useEffect(() => {
+  axios.get(BASE_URL)
+    .then(response => {
+      setExistingPlans(response.data);
+    })
+    .catch(error => {
+      console.error('Error fetching learning plans:', error);
+    });
+}, []);
+
 
   const handleAddNewPlan = () => {
     setIsAddingPlan(true);
@@ -46,27 +39,36 @@ function LearningPlansDashboard() {
 
   const handleSavePlan = (plan) => {
     if (isEditingPlan) {
-      // Update the plan
-      setExistingPlans(existingPlans.map((existingPlan) => 
-        existingPlan.id === plan.id ? plan : existingPlan
-      ));
-      setIsEditingPlan(false);
+      axios.put(`${BASE_URL}/${plan.id}`, plan)
+        .then(response => {
+          setExistingPlans(prevPlans =>
+            prevPlans.map(p => (p.id === plan.id ? response.data : p))
+          );
+          handleCloseForm();
+        })
+        .catch(error => console.error('Error updating plan:', error));
     } else {
-      // Add new plan
-      setExistingPlans([...existingPlans, plan]);
+      axios.post(BASE_URL, plan)
+        .then(response => {
+          setExistingPlans([...existingPlans, response.data]);
+          handleCloseForm();
+        })
+        .catch(error => console.error('Error adding plan:', error));
     }
-    handleCloseForm();
   };
 
   const handleEditPlan = (planId) => {
-    const planToEdit = existingPlans.find((plan) => plan.id === planId);
     setCurrentPlanId(planId);
     setIsEditingPlan(true);
     setIsAddingPlan(true);
   };
 
   const handleDeletePlan = (id) => {
-    setExistingPlans(existingPlans.filter((plan) => plan.id !== id));
+    axios.delete(`${BASE_URL}/${id}`)
+      .then(() => {
+        setExistingPlans(existingPlans.filter(plan => plan.id !== id));
+      })
+      .catch(error => console.error('Error deleting plan:', error));
   };
 
   return (
