@@ -48,13 +48,26 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			
+			 <version>1.18.24</version>
+        <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- shehara -->
+		 <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-redis</artifactId>
+</dependency>
+<dependency>
+  <groupId>org.mongodb</groupId>
+  <artifactId>mongodb-driver-sync</artifactId>
+  <version>5.2.1</version> <!-- Make sure it's the latest -->
+</dependency>
 	</dependencies>
 
 	<build>
