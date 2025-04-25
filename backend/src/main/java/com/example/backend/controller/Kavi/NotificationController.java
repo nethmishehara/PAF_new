@@ -14,11 +14,11 @@ public class NotificationController {
 
     @Autowired
     private NotificationService notificationService;
+
     @GetMapping("/{userId}")
     public List<Notification> getUserNotifications(@PathVariable String userId) {
-        return notificationService.getNotificationsByUserId(userId); // update the method name
+        return notificationService.getNotificationsByUserId(userId);
     }
-    
 
     @PostMapping("/{userId}/mark-read")
     public void markAllAsRead(@PathVariable String userId) {

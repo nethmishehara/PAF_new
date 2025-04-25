@@ -1,24 +1,35 @@
-import logo from './logo.svg';
+// App.js
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+
 import './App.css';
 
+// Pages
+import PostList from './components/Posts/PostList';
+import NotificationList from './components/Posts/NotificationList';
+import Profile from './components/Profile/Profile';
+
 function App() {
+  const userId = 'user123'; // You can replace this with dynamic auth later
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        {/* Navigation */}
+        <nav className="navbar">
+          <Link to="/">Social Feed</Link>
+          <Link to="/notifications">Notifications</Link>
+          <Link to={`/profile/${userId}`}>Profile</Link> {/* ✅ Update profile link */}
+        </nav>
+
+        {/* Routes */}
+        <Routes>
+          <Route path="/" element={<PostList userId={userId} />} />
+          <Route path="/notifications" element={<NotificationList userId={userId} />} />
+          <Route path="/profile/:userId" element={<Profile />} /> {/* ✅ Add :userId param */}
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

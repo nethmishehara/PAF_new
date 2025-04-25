@@ -6,10 +6,7 @@ import com.example.backend.repsitory.Kavi.CourseRepository;
 import com.example.backend.repsitory.Kavi.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.ArrayList;
-
 
 @Service
 public class RecommendationService {

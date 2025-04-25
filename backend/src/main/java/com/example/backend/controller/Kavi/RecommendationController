@@ -1,7 +1,7 @@
-package com.example.backend.controller;
+package com.example.backend.controller.Kavi;
 
-import com.example.backend.model.Course;
-import com.example.backend.service.RecommendationService;
+import com.example.backend.model.Kavi.Course;
+import com.example.backend.service.Kavi.RecommendationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +11,7 @@ import java.util.List;
 @RequestMapping("/api/recommendations")
 @CrossOrigin(origins = "*")
 public class RecommendationController {
+
     @Autowired
     private RecommendationService recommendationService;
 

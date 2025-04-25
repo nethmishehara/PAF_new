@@ -1,18 +1,14 @@
-package com.example.backend.service;
+package com.example.backend.service.Kavi;
 
 import com.example.backend.model.Kavi.Course;
-import com.example.backend.repsitory.CourseRepository;
+import com.example.backend.repsitory.Kavi.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.ArrayList;
-
 import java.util.Optional;
 
 @Service
 public class CourseService {
-
     @Autowired
     private CourseRepository courseRepository;
 

@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.UUID; // ✅ Fix for UUID error
-
-
+import java.util.UUID;
 
 @Service
 public class PostService {
@@ -24,6 +22,10 @@ public class PostService {
 
     public List<Post> getAllPosts() {
         return postRepository.findAll();
+    }
+
+    public List<Post> getPostsByUserId(String userId) {
+        return postRepository.findByUserId(userId);
     }
 
     public Post createPost(Post post) {

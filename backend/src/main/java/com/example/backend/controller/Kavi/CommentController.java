@@ -3,46 +3,59 @@ package com.example.backend.controller.Kavi;
 import com.example.backend.model.Kavi.Comment;
 import com.example.backend.service.Kavi.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/comments")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class CommentController {
 
     @Autowired
     private CommentService commentService;
 
-    // Get comments by post ID
+    @GetMapping
+    public ResponseEntity<List<Comment>> getAllComments() {
+        return ResponseEntity.ok(commentService.getAllComments());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Comment> getCommentById(@PathVariable String id) {
+        Optional<Comment> commentOpt = commentService.getCommentById(id);
+        return commentOpt.map(ResponseEntity::ok)
+                         .orElseGet(() -> ResponseEntity.status(404).body(null));
+    }
+
     @GetMapping("/post/{postId}")
-    public List<Comment> getCommentsByPostId(@PathVariable String postId) {
-        return commentService.getCommentsByPostId(postId);
+    public ResponseEntity<List<Comment>> getCommentsByPostId(@PathVariable String postId) {
+        return ResponseEntity.ok(commentService.getCommentsByPostId(postId));
     }
 
-    // Add a new comment
     @PostMapping
-    public Comment addComment(@RequestBody Comment comment) {
-        return commentService.addComment(comment);
+    public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
+        return ResponseEntity.ok(commentService.addComment(comment));
     }
 
-    // Edit a comment by the user
-    @PutMapping("/{commentId}")
-    public Comment editComment(@PathVariable String commentId, @RequestParam String newText) {
-        
-        return commentService.editComment(commentId, newText);
+    @PutMapping("/{id}")
+    public ResponseEntity<Comment> updateComment(@PathVariable String id, @RequestBody Comment comment) {
+        Optional<Comment> existingComment = commentService.getCommentById(id);
+        if (existingComment.isEmpty()) {
+            return ResponseEntity.status(404).body(null);
+        }
+        comment.setId(id); // make sure ID stays consistent
+        return ResponseEntity.ok(commentService.updateComment(comment));
     }
 
-    // Delete a comment by the commenter
-    @DeleteMapping("/{commentId}")
-    public boolean deleteComment(@PathVariable String commentId, @RequestParam String userId) {
-        return commentService.deleteComment(commentId, userId);
-    }
-
-    // Delete a comment by the post owner
-    @DeleteMapping("/post-owner/{commentId}")
-    public boolean deleteCommentAsPostOwner(@PathVariable String commentId, @RequestParam String postOwnerId) {
-        return commentService.deleteCommentAsPostOwner(commentId, postOwnerId);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteComment(@PathVariable String id) {
+        Optional<Comment> existingComment = commentService.getCommentById(id);
+        if (existingComment.isEmpty()) {
+            return ResponseEntity.status(404).body("Comment not found");
+        }
+        commentService.deleteComment(id);
+        return ResponseEntity.ok("Comment deleted successfully");
     }
 }

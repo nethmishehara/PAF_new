@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.ArrayList;
-
 import java.util.Optional;
 
 @Service
@@ -27,6 +25,14 @@ public class CommentService {
     @Autowired
     private NotificationRepository notificationRepository;
 
+    public List<Comment> getAllComments() {
+        return commentRepository.findAll();
+    }
+
+    public Optional<Comment> getCommentById(String id) {
+        return commentRepository.findById(id);
+    }
+
     public List<Comment> getCommentsByPostId(String postId) {
         return commentRepository.findByPostId(postId);
     }
@@ -35,9 +41,8 @@ public class CommentService {
         comment.setTimestamp(new Date());
         Comment savedComment = commentRepository.save(comment);
 
-        Optional<Post> optionalPost = postRepository.findById(comment.getPostId());
-        if (optionalPost.isPresent()) {
-            Post post = optionalPost.get();
+        // Send notification to post owner if commenter is not the post owner
+        postRepository.findById(comment.getPostId()).ifPresent(post -> {
             if (!post.getUserId().equals(comment.getUserId())) {
                 Notification notification = new Notification();
                 notification.setUserId(post.getUserId());
@@ -45,44 +50,17 @@ public class CommentService {
                 notification.setTimestamp(new Date());
                 notificationRepository.save(notification);
             }
-        }
+        });
 
         return savedComment;
     }
 
-    public Comment editComment(String commentId, String newText) {
-        Optional<Comment> optionalComment = commentRepository.findById(commentId);
-        if (optionalComment.isPresent()) {
-            Comment comment = optionalComment.get();
-            comment.setContent(newText);
-
-            return commentRepository.save(comment);
-        }
-        return null;
+    public Comment updateComment(Comment comment) {
+        comment.setTimestamp(new Date());
+        return commentRepository.save(comment);
     }
 
-    public boolean deleteComment(String commentId, String userId) {
-        Optional<Comment> optionalComment = commentRepository.findById(commentId);
-        if (optionalComment.isPresent()) {
-            Comment comment = optionalComment.get();
-            if (comment.getUserId().equals(userId)) {
-                commentRepository.deleteById(commentId);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean deleteCommentAsPostOwner(String commentId, String postOwnerId) {
-        Optional<Comment> optionalComment = commentRepository.findById(commentId);
-        if (optionalComment.isPresent()) {
-            Comment comment = optionalComment.get();
-            Optional<Post> optionalPost = postRepository.findById(comment.getPostId());
-            if (optionalPost.isPresent() && optionalPost.get().getUserId().equals(postOwnerId)) {
-                commentRepository.deleteById(commentId);
-                return true;
-            }
-        }
-        return false;
+    public void deleteComment(String id) {
+        commentRepository.deleteById(id);
     }
 }

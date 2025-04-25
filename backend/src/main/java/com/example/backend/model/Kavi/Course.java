@@ -1,8 +1,7 @@
-package com.example.backend.model;
+package com.example.backend.model.Kavi;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.util.List;
 
 @Document(collection = "courses")
@@ -11,7 +10,7 @@ public class Course {
     private String id;
     private String title;
     private String description;
-    private List<String> tags; // Skill tags the course is related to
+    private List<String> tags;
     private String instructor;
     private String url;
 
@@ -26,7 +25,7 @@ public class Course {
         this.url = url;
     }
 
-    // Getters and Setters
+    // Getters & Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 

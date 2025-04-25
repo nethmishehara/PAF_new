@@ -1,0 +1,44 @@
+.connections-list {
+    margin-top: 30px;
+  }
+  
+  .user-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .user-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+  }
+  
+  .follow-btn {
+    background-color: #033108;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+  
+  .follow-btn:hover {
+    background-color: #009a74;
+  }
+  
+  .no-users {
+    color: #999;
+    font-style: italic;
+  }
+  

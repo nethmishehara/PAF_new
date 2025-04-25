@@ -1,7 +1,7 @@
 package com.example.backend.service.Kavi;
 
 import com.example.backend.model.Kavi.Notification;
-import com.example.backend.repsitory.KaviNotificationRepository;
+import com.example.backend.repsitory.Kavi.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

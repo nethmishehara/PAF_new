@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 public interface CourseRepository extends MongoRepository<Course, String> {
-    List<Course> findByTagsIn(List<String> tags); // Used in course recommendation
+    List<Course> findByTagsIn(List<String> tags);
 }
