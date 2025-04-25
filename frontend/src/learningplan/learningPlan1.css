@@ -1,0 +1,612 @@
+/* Main Container */
+.lpbuttondashboard {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.lph1 {
+  text-align: center;  /* Centers the text horizontally */
+  margin: 0;           /* Removes default margin around h1 */
+  font-size: 2rem;     /* Adjust font size if needed */
+}
+
+
+/* Main Dashboard Container */
+/* .lpbuttondashboard {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin: 40px auto;
+  text-align: center;
+} */
+
+/* Header Style */
+.lph1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Button List Styling */
+.lpbuttonlist {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Add New Plan Button */
+.addnewplan.btn {
+  background: linear-gradient(145deg, #6f6ff5, #4e4ef7); /* Gradient for button */
+  color: #fff;
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 50px; /* Rounded edges */
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  transition: all 0.3s ease-in-out;
+  outline: none;
+  margin-top: 15px;
+}
+
+/* Hover Effect for Add New Plan Button */
+.addnewplan.btn:hover {
+  transform: translateY(-3px); /* Slight lift effect on hover */
+  background: linear-gradient(145deg, #4e4ef7, #6f6ff5); /* Reverse gradient on hover */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+}
+
+/* Active State for Button */
+.addnewplan.btn:active {
+  transform: translateY(2px); /* Button presses down when clicked */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(145deg, #4e4ef7, #6f6ff5); /* Keep active gradient */
+}
+
+/* Close the form button (optional) */
+.addnewplan.btn:focus {
+  outline: none;
+}
+
+/* Button Text Styling */
+.addnewplan.btn span {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Additional Button Container Styling */
+.lpbuttonlist {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+
+
+/* Add New Learning Plan Form */
+.addnewlpform {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+}
+
+.addnewlpform h2 {
+  margin-bottom: 20px;
+}
+
+.addnewlpform input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+.addnewlpform input:focus {
+  outline: none;
+  border-color: #210000;
+}
+
+/* .button-container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.button-container button {
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  padding: 10px 25px;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button-container button:hover {
+  background-color: #0056b3;
+} */
+
+/* Saved Learning Plans List */
+/* Saved Learning Plans List */
+.savedlplist {
+  margin-top: 20px;
+  max-width: 1500px;
+  margin-left: auto;
+  margin-right: auto;
+  color: #1f3246;
+}
+.savedlplist h2.exist {
+  text-align: left; /* Ensures the title is aligned to the left */
+  font-size: 1rem;
+  font-weight: 700;
+  color: #172b40;
+  margin-bottom: 20px;
+}
+
+.savedlplist ul {
+  list-style-type: none;
+  padding: 0;
+  color: #172b40;
+}
+
+.savedlplist li {
+  background-color: #c4c9cc;
+  margin-bottom: 15px;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  border-left: 6px solid #25323f; /* Adding a blue accent on the left side */
+}
+
+.savedlplist li:hover {
+  background-color: #f0f8ff; /* Light blue background on hover */
+  transform: translateY(-5px); /* Slight lift effect on hover */
+}
+
+.savedlplist li .plan-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  flex: 1;
+  margin-right: 20px;
+  background-color: #e7f4ff; /* Light blue background inside the title */
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.savedlplist li .plan-description {
+  font-size: 14px;
+  color: #666;
+  margin-top: 8px;
+  background-color: #f7f7f7; /* Subtle gray background for description */
+  padding: 8px;
+  border-radius: 6px;
+}
+
+/* .savedlplist li .action-buttons {
+  display: flex;
+  gap: 15px;
+} */
+
+/* .savedlplist li .action-buttons button {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+} */
+/* 
+.savedlplist li .action-buttons button:hover {
+  background-color: #0056b3; /* Darker blue on hover 
+  transform: translateY(-2px);  
+} */
+
+/* .savedlplist li .action-buttons button:active {
+  transform: translateY(2px); /* Button presses down when clicked 
+} */
+
+/* .savedlplist li .action-buttons button:disabled {
+  background-color: #b8daff;
+  cursor: not-allowed;
+} */
+
+/* Plan Action Buttons */
+.plan-actions button {
+  background-color: #007bff;
+  color: white;
+  margin-right: 10px;
+  padding: 8px 16px;
+  border-radius: 6px;
+}
+
+.plan-actions button:last-child {
+  background-color: #dc3545;
+}
+
+.plan-actions button:hover {
+  background-color: #0056b3;
+}
+
+/*Learning Plan Detail Section*/
+.lpdetails {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+}
+
+.lpdetails h2 {
+  margin-bottom: 20px;
+}
+
+.lpdetails .resource-list {
+  margin-top: 20px;
+}
+
+.lpdetails .resource-list div {
+  margin-bottom: 10px;
+}
+
+.lpdetails .resource-list label {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.lpdetails .resource-list input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.lpdetails .resource-list input[type="checkbox"]:checked {
+  background-color: #28a745;
+}
+
+.lpdetails .completed-status {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 20px;
+}
+
+.lpdetails .completed-status.ongoing {
+  color: #ffcc00;
+}
+
+.lpdetails .completed-status.completed {
+  color: #28a745;
+}
+
+/* Bottom Buttons for Save and Leave */
+.lpdetails .button-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.lpdetails .button-container button {
+  background-color: #28a745;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-size: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.lpdetails .button-container button:hover {
+  background-color: #218838;
+}
+/* Popup Form Styles */
+/* Basic Form Styling */
+/* Basic Form Styling */
+.lppopup-form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  z-index: 1000;
+  overflow-y: auto; /* Allows scrolling if the content overflows */
+  max-height: 90vh; /* Limits the height of the form */
+}
+
+/* Form Header */
+.lppopup-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #172b40;
+}
+
+/* Label Styling */
+.lppopup-form label {
+  display: block;
+  margin-bottom: 10px; /* Adjusted margin for better spacing */
+  font-size: 16px; /* Clear and readable font size */
+  font-family: 'Roboto', 'Arial', sans-serif; /* Clean and modern sans-serif font */
+  font-weight: 500; /* A lighter, clean weight for better readability */
+  color: #333333; /* Neutral dark color for easy reading */
+  text-align: left; /* Ensure label is left-aligned */
+  line-height: 1.5; /* Better spacing between label and input */
+  transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+/* Hover effect for label */
+.lppopup-form label:hover {
+  color: #007bff; /* Blue color for a professional and interactive feel */
+}
+
+
+/* Input Fields */
+.lppopup-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Add Resource Button */
+/* Button Container for Save, Cancel, and Add Resource */
+.lpbutton-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* Space between buttons */
+  margin-top: 20px;
+}
+
+/* Add Resource Button Styling */
+.lppopup-form button.add-resource {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 16px; /* Adjust padding for smaller button */
+  border-radius: 4px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  flex: 1; /* Allows button to grow and share space equally */
+  transition: background-color 0.3s ease, opacity 0.2s ease;
+}
+
+/* Hover Effects for Add Resource Button */
+.lppopup-form button.add-resource:hover {
+  opacity: 0.8;
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Button Styling for Save and Cancel Buttons */
+.lppopup-form button:nth-child(1),
+.lppopup-form button:nth-child(2) {
+  background-color: #28a745;
+  color: white;
+  width: 48%; /* Make them share space equally */
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+/* Hover Effects for Save and Cancel Buttons */
+.lppopup-form button:nth-child(1):hover,
+.lppopup-form button:nth-child(2):hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* Active Effects */
+.lppopup-form button:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+/* Disabled Button Styling */
+.lppopup-form button:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+
+/* Button Container for Save and Cancel */
+.lpbutton-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px; /* Add a gap between the buttons */
+  margin-top: 20px; /* Space above the buttons */
+}
+
+/* Save Button Styling */
+.lppopup-form button:nth-child(1) {
+  background-color: #28a745;
+  color: white;
+  width: 48%;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+/* Cancel Button Styling */
+/* Button Container for Save and Cancel */
+.lpbutton-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* Slightly smaller gap between buttons */
+  margin-top: 20px; /* Space above the buttons */
+}
+
+/* Save Button Styling */
+.lppopup-form button:nth-child(1) {
+  background-color: #28a745;
+  color: white;
+  width: 48%;
+  padding: 8px 16px; /* Reduced padding for smaller buttons */
+  border-radius: 6px; /* Slightly smaller border radius */
+  font-size: 14px; /* Smaller font size */
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+/* Cancel Button Styling */
+.lppopup-form button:nth-child(2) {
+  background-color: #dc3545;
+  color: white;
+  width: 48%;
+  padding: 8px 16px; /* Reduced padding for smaller buttons */
+  border-radius: 6px; /* Slightly smaller border radius */
+  font-size: 14px; /* Smaller font size */
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+/* Hover Effects for Both Buttons */
+.lppopup-form button:hover {
+  opacity: 0.9;
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+/* Focus Effects */
+.lppopup-form button:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); /* Slightly smaller shadow */
+}
+
+/* Active Effects (when clicked) */
+.lppopup-form button:active {
+  transform: translateY(1px); /* Slight press effect when clicked */
+  box-shadow: none;
+}
+
+/* Disabled Button Styling */
+.lppopup-form button:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* General Button Styles */
+.resousebtn,
+.delete-resource-btn {
+  color: white;
+  padding: 15px 30px;
+  font-size: 15px;
+  font-weight: bold;
+  border: none;
+  border-radius: 50px; /* Rounded edges */
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  outline: none;
+  text-transform: uppercase;
+}
+
+/* Add Resource Button */
+.resousebtn {
+  background: linear-gradient(145deg, #4CAF50, #45a049); /* Green gradient */
+}
+
+/* Hover Effect */
+.resousebtn:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(145deg, #45a049, #4CAF50);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Active State */
+.resousebtn:active {
+  transform: translateY(2px);
+  background: linear-gradient(145deg, #3e8e41, #45a049);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Smaller Delete Button */
+.delete-resource-btn {
+  background: linear-gradient(145deg, #e74c3c, #c0392b); /* Red gradient */
+  padding: 8px 8px; /* Reduce padding */
+  font-size: 14px; /* Reduce text size */
+  border-radius: 30px; /* Adjust for a balanced shape */
+}
+
+/* Hover Effect */
+.delete-resource-btn:hover {
+  transform: translateY(-2px); /* Slightly reduce the lift effect */
+  background: linear-gradient(145deg, #c0392b, #e74c3c);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Adjust shadow */
+}
+
+/* Active State */
+.delete-resource-btn:active {
+  transform: translateY(1px); /* Reduce press effect */
+  background: linear-gradient(145deg, #922b21, #c0392b);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.resource-item {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  gap: 10px; /* Add spacing between elements */
+  margin-bottom: 8px; /* Optional: Add space between rows */
+}
+
+.resource-item input {
+  flex: 1; /* Make input take up available space */
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+
+
+/* Style for the Add (+) button */
+.resousebtn {
+  padding: 6px 12px;
+  font-size: 16px;
+  background: linear-gradient(145deg, #6f6ff5, #4e4ef7);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Flex container to keep buttons aligned */
+.resource-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
