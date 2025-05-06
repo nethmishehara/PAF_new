@@ -9,6 +9,7 @@ import com.example.demo.service.LearningProgressUpdateService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/progress")
+@CrossOrigin(origins = "*")
 public class LearningProgressController {
 
     @Autowired
@@ -43,6 +45,16 @@ public class LearningProgressController {
         }
     }
 
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<LearningProgressUpdate>> getProgressUpdatesByUserId(@PathVariable String userId) {
+        try {
+            List<LearningProgressUpdate> progress = progressService.getLearningProgressUpdatesByUserId(userId);
+            return ResponseEntity.ok(progress);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null); // Handle error case
+        }
+    }
+
     @PostMapping
     public ResponseEntity<LearningProgressUpdate> createProgressUpdate(
             @RequestBody LearningProgressUpdateRequest request) {
@@ -50,6 +62,9 @@ public class LearningProgressController {
             LearningProgressUpdate progressUpdate = new LearningProgressUpdate();
             progressUpdate.setProgressId(request.getProgressId());
             progressUpdate.setCourseName(request.getCourseName());
+            progressUpdate.setUserName(request.getUserName());
+            progressUpdate.setUserId(request.getUserId());
+            
             progressUpdateRepo.save(progressUpdate);
             return ResponseEntity.ok(progressUpdate);
         } catch (Exception e) {

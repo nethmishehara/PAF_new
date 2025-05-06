@@ -9,11 +9,8 @@ import com.example.demo.dto.LearningProgressUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
-
-
 
 @Service
 public class LearningProgressUpdateServiceImpl implements LearningProgressUpdateService {
@@ -21,14 +18,13 @@ public class LearningProgressUpdateServiceImpl implements LearningProgressUpdate
     @Autowired
     private LearningProgressUpdateRepo progUpdateRepo;
 
-
     @Autowired
     private UserRepository userRepository;
 
     @Override
     public List<LearningProgressUpdate> getAlLearningProgressUpdates() {
-       return progUpdateRepo.findAll();
-        
+        return progUpdateRepo.findAll();
+
     }
 
     @Override
@@ -37,15 +33,23 @@ public class LearningProgressUpdateServiceImpl implements LearningProgressUpdate
     }
 
     @Override
+    public List<LearningProgressUpdate> getLearningProgressUpdatesByUserId(String userId) {
+        System.out.println("Filtering progress for userId: " + userId);
+        List<LearningProgressUpdate> result = progUpdateRepo.findByUserId(userId);
+        System.out.println("Found " + result.size() + " records for userId: " + userId);
+        return result;
+    }
+
+    @Override
     public LearningProgressUpdate createLearningProgressUpdate(LearningProgressUpdate request) {
         // Check if user exists
-       
+
         // Save and return the saved entity
         return progUpdateRepo.save(request);
     }
-    
-@Override
-    public LearningProgressUpdate updateLearningProgressUpdate(String progressId, LearningProgressUpdate request) {    
+
+    @Override
+    public LearningProgressUpdate updateLearningProgressUpdate(String progressId, LearningProgressUpdate request) {
         LearningProgressUpdate existingProgress = progUpdateRepo.findById(progressId).orElse(null);
         if (existingProgress == null) {
             return null; // Handle not found case
@@ -54,9 +58,9 @@ public class LearningProgressUpdateServiceImpl implements LearningProgressUpdate
     }
 
     @Override
-    public void  deleteLearningProgressUpdate(String progressId) {
+    public void deleteLearningProgressUpdate(String progressId) {
         LearningProgressUpdate update = progUpdateRepo.findById(progressId).orElse(null);
-    
+
         progUpdateRepo.delete(update);// Return the deleted update as a response
 
     }

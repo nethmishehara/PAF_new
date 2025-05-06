@@ -21,10 +21,8 @@ import java.util.Map;
 public class LearningProgressUpdate {
     @Id
     private String progressId;  // MongoDB uses String IDs, not Long
-    
-    // @DBRef
-    // private User user;  // Use DBRef for references to other documents
-    
+    private String userId;
+    private String userName;
     private String courseName;
     // private String generatedText;
     // private Map<String, String> placeholders;

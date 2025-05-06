@@ -12,6 +12,8 @@ public interface LearningProgressUpdateService {
 
     LearningProgressUpdate getLearningProgressUpdateById(String id);
 
+    List<LearningProgressUpdate> getLearningProgressUpdatesByUserId(String userId);
+
     LearningProgressUpdate createLearningProgressUpdate(LearningProgressUpdate learningProgressUpdate);
 
     LearningProgressUpdate updateLearningProgressUpdate(String id, LearningProgressUpdate learningProgressUpdate);
