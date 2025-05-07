@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -64,6 +65,24 @@ public class LearningProgressController {
             progressUpdate.setCourseName(request.getCourseName());
             progressUpdate.setUserName(request.getUserName());
             progressUpdate.setUserId(request.getUserId());
+            progressUpdate.setCourseDesc(request.getCourseDesc());
+            progressUpdate.setDifficultyLevel(request.getDifficultyLevel());
+            progressUpdate.setSkillCat(request.getSkillCat());
+            progressUpdate.setCourseRate(request.getCourseRate());
+            progressUpdate.setMediaUrl(request.getMediaUrl());
+
+            List<String> skillsList = request.getSkillsLearned();
+            if(skillsList == null){
+                skillsList = new ArrayList<>();
+            }
+
+            List<String> achivList = request.getSkillsLearned();
+            if(achivList == null){
+                achivList = new ArrayList<>();
+            }
+
+            progressUpdate.setSkillsLearned(skillsList);
+            progressUpdate.setAchMilestone(achivList);
             
             progressUpdateRepo.save(progressUpdate);
             return ResponseEntity.ok(progressUpdate);
@@ -82,6 +101,26 @@ public class LearningProgressController {
             }
             exisprogressUpdate.setProgressId(request.getProgressId());
             exisprogressUpdate.setCourseName(request.getCourseName());
+            exisprogressUpdate.setUserName(request.getUserName());
+            exisprogressUpdate.setUserId(request.getUserId());
+            exisprogressUpdate.setCourseDesc(request.getCourseDesc());
+            exisprogressUpdate.setDifficultyLevel(request.getDifficultyLevel());
+            exisprogressUpdate.setSkillCat(request.getSkillCat());
+            exisprogressUpdate.setCourseRate(request.getCourseRate());
+            exisprogressUpdate.setMediaUrl(request.getMediaUrl());
+
+            List<String> skillsList = request.getSkillsLearned();
+            if(skillsList == null){
+                skillsList = new ArrayList<>();
+            }
+
+            List<String> achivList = request.getSkillsLearned();
+            if(achivList == null){
+                achivList = new ArrayList<>();
+            }
+            exisprogressUpdate.setSkillsLearned(skillsList);
+            exisprogressUpdate.setAchMilestone(achivList);
+
             progressUpdateRepo.save(exisprogressUpdate);
             return ResponseEntity.ok(exisprogressUpdate);
         } catch (Exception e) {

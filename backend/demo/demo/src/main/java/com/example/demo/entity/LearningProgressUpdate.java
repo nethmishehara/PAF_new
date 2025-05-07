@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,11 +25,14 @@ public class LearningProgressUpdate {
     private String userId;
     private String userName;
     private String courseName;
-    // private String generatedText;
-    // private Map<String, String> placeholders;
-    // private List<String> mediaUrls;
-    // private List<String> tags;
-    
+    private String courseDesc;
+    private String difficultyLevel;
+    private List<String> achMilestone;
+    private String skillCat;
+    private List<String> skillsLearned;
+    private String courseRate;
+    private String mediaUrl;
+
     @CreatedDate
     private LocalDateTime createdAt;
     

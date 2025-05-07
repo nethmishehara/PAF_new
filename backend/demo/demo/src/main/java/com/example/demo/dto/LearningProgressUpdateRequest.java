@@ -1,4 +1,6 @@
 package com.example.demo.dto;
+import java.util.List;
+
 import lombok.Data;
 
 
@@ -9,7 +11,11 @@ public class LearningProgressUpdateRequest {
     private String courseName;
     private String userId;
     private String userName;
-    // private Map<String, String> placeholders;
-    // private List<String> mediaUrls;
-    // private List<String> tags;
+    private String courseDesc;
+    private String difficultyLevel;
+    private List<String> achMilestone;
+    private String skillCat;
+    private List<String> skillsLearned;
+    private String courseRate;
+    private String mediaUrl;
 }
