@@ -1,0 +1,140 @@
+.comment-section {
+  margin-top: 20px;
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+.comment-title {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+  border-left: 4px solid #0a66c2;
+  padding-left: 10px;
+}
+
+.comment {
+  background-color: #f8f9fa;
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  border: 1px solid #e1e4e8;
+  transition: background 0.3s ease;
+}
+
+.comment:hover {
+  background-color: #f1f3f5;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.comment-user {
+  color: #0a66c2;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.comment-time {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.comment-content {
+  font-size: 1rem;
+  color: #333;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+.comment-actions {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.comment-actions .btn {
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn.like {
+  background-color: #eef5ff;
+  color: #0a66c2;
+}
+
+.btn.edit {
+  background-color: #fff8e1;
+  color: #8a6d3b;
+}
+
+.btn.delete {
+  background-color: #fdecea;
+  color: #c0392b;
+}
+
+.btn.update {
+  background-color: #e6f4ea;
+  color: #2e7d32;
+}
+
+.btn.cancel {
+  background-color: #fbeaea;
+  color: #b71c1c;
+}
+
+.btn.post {
+  background-color: #0a66c2;
+  color: white;
+  margin-top: 10px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.btn:hover {
+  opacity: 0.95;
+}
+
+.comment-input textarea {
+  width: 100%;
+  min-height: 90px;
+  padding: 14px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccd0d5;
+  font-size: 1rem;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+}
+
+.comment-input textarea:focus {
+  border-color: #0a66c2;
+  outline: none;
+}
+
+.edit-area textarea {
+  width: 100%;
+  min-height: 70px;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  border: 1px solid #bbb;
+  font-size: 1rem;
+}
+
+.edit-buttons {
+  display: flex;
+  gap: 12px;
+}

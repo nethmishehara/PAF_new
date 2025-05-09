@@ -1,7 +1,5 @@
 package com.example.backend.model.dasu;
 
-
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,18 +8,23 @@ import java.util.List;
 
 @Document(collection = "posts")
 public class Post {
+
     @Id
     private String id;
 
+    private String userId;
     private String username;
     private String profilePic;
     private String description;
-    private List<String> imageUrls; // ✨ updated from imageUrl to imageUrls
+    private List<String> imageUrls;
     private Date createdAt;
 
-    public Post() {}
+    public Post() {
+        this.createdAt = new Date(); // Default to now
+    }
 
-    public Post(String username, String profilePic, String description, List<String> imageUrls) {
+    public Post(String userId, String username, String profilePic, String description, List<String> imageUrls) {
+        this.userId = userId;
         this.username = username;
         this.profilePic = profilePic;
         this.description = description;
@@ -29,14 +32,20 @@ public class Post {
         this.createdAt = new Date();
     }
 
-    // 💫 Getters and Setters
-
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
