@@ -6,7 +6,6 @@ import "swiper/css/navigation";
 import "swiper/css/keyboard";
 
 const Post = ({ post, onDelete, onUpdate }) => {
-  console.log(post); // Check if post has the 'id'
   const [showOptions, setShowOptions] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [newUsername, setNewUsername] = useState(post.username);
@@ -21,7 +20,7 @@ const Post = ({ post, onDelete, onUpdate }) => {
       });
 
       if (res.ok) {
-        onDelete(post.id); // Tell parent to remove from state
+        onDelete(post.id);
       } else {
         console.error("Failed to delete post");
       }
@@ -31,34 +30,28 @@ const Post = ({ post, onDelete, onUpdate }) => {
   };
 
   const handleUpdate = async (e) => {
-   
+    e.preventDefault();
+
     const postId = post.id;
-  
-    console.log("Updating post with ID:", postId); // Log postId to check
-  
-    if (!postId) {
-      console.error("Post ID is missing");
-      return;
-    }
-  
     const formData = new FormData();
     formData.append("username", newUsername);
     formData.append("profilePic", newProfilePic);
     formData.append("description", newDescription);
+
     newImages.forEach((image) => {
       formData.append("images", image);
     });
-  
+
     try {
       const res = await fetch(`http://localhost:8080/api/posts/${postId}`, {
         method: "PUT",
         body: formData,
       });
-  
+
       if (res.ok) {
         const updatedPost = await res.json();
-        onUpdate(updatedPost); // Update the post in parent state
-        setEditMode(false); // Exit edit mode
+        onUpdate(updatedPost);
+        setEditMode(false); 
       } else {
         console.error("Failed to update post");
       }
@@ -66,7 +59,7 @@ const Post = ({ post, onDelete, onUpdate }) => {
       console.error("Error updating post:", err);
     }
   };
-  
+
   return (
     <div className="DASM-post">
       <div className="DASM-post-header">
@@ -89,26 +82,22 @@ const Post = ({ post, onDelete, onUpdate }) => {
         <p className="DASM-post-content">{post.description}</p>
       ) : (
         <form onSubmit={handleUpdate}>
-          
-          <div>
-            <textarea
-              value={newDescription}
-              onChange={(e) => setNewDescription(e.target.value)}
-              placeholder="Update description"
-            />
-          </div>
-          
+          <textarea
+            value={newDescription}
+            onChange={(e) => setNewDescription(e.target.value)}
+            placeholder="Update description"
+          />
+          <input
+            type="file"
+            multiple
+            onChange={(e) => setNewImages(Array.from(e.target.files))}
+          />
           <button type="submit">Update Post</button>
         </form>
       )}
 
       {post.imageUrls && post.imageUrls.length > 0 && (
-        <Swiper
-          navigation
-          keyboard={{ enabled: true }}
-          modules={[Navigation, Keyboard]}
-          className="DASM-post-carousel"
-        >
+        <Swiper navigation keyboard={{ enabled: true }} modules={[Navigation, Keyboard]} className="DASM-post-carousel">
           {post.imageUrls.map((url, index) => {
             const fullUrl = `http://localhost:8080${url}`;
             const isVideo = url.endsWith(".mp4") || url.endsWith(".webm") || url.endsWith(".ogg");

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Navigationbar from "../../SharedComponents/Navigationbar"; // Corrected import
-
-
+import Navigationbar from "../../SharedComponents/Navigationbar";
 import "../styles/styles.css";
 import Post from "../components/Post";
 import LeftSection from "../components/LeftSection";
@@ -13,13 +11,13 @@ const Home = () => {
   const [postText, setPostText] = useState("");
   const [files, setFiles] = useState([]);
   const [posts, setPosts] = useState([]);
-  const [editingPost, setEditingPost] = useState(null); // Track which post is being edited
+  const [editingPost, setEditingPost] = useState(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const res = await axios.get("http://localhost:8080/api/posts");
-        setPosts(res.data.reverse()); // Show latest posts first
+        setPosts(res.data.reverse());
       } catch (err) {
         console.error("Error fetching posts:", err);
       }
@@ -29,33 +27,29 @@ const Home = () => {
   }, []);
 
   const handleDelete = (deletedId) => {
-    setPosts((prev) => prev.filter((post) => post._id !== deletedId));
+    setPosts((prev) => prev.filter((post) => post.id !== deletedId));
   };
 
   const handleUpdatePost = async (updatedPost) => {
+    const formData = new FormData();
+    formData.append("username", updatedPost.username);
+    formData.append("profilePic", updatedPost.profilePic);
+    formData.append("description", updatedPost.description);
+
+    updatedPost.imageUrls.forEach((image) => {
+      formData.append("images", image);
+    });
+
     try {
-      const formData = new FormData();
-      formData.append("username", updatedPost.username);
-      formData.append("profilePic", updatedPost.profilePic);
-      formData.append("description", updatedPost.description);
-
-      updatedPost.imageUrls.forEach((image) => {
-        formData.append("images", image); // Assuming image URLs are updated
-      });
-
-      const response = await axios.put(
-        `http://localhost:8080/api/posts/${updatedPost._id}`,
-        formData
-      );
-
+      const response = await axios.put(`http://localhost:8080/api/posts/${updatedPost.id}`, formData);
       setPosts((prev) =>
-        prev.map((p) => (p._id === updatedPost._id ? response.data : p))
+        prev.map((p) => (p.id === updatedPost.id ? response.data : p))
       );
       alert("Post updated successfully!");
       setIsModalOpen(false);
       setEditingPost(null);
     } catch (err) {
-      alert("Error updating post. See console.");
+      alert("Error updating post.");
       console.error("Error updating post:", err);
     }
   };
@@ -63,16 +57,12 @@ const Home = () => {
   const handleEdit = (post) => {
     setEditingPost(post);
     setPostText(post.description);
-    setFiles(post.imageUrls); // Assuming images are handled
+    setFiles(post.imageUrls);
     setIsModalOpen(true);
   };
 
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
-    if (selectedFiles.length > 3) {
-      alert("You can only upload up to 3 images.");
-      return;
-    }
     setFiles(selectedFiles);
   };
 
@@ -88,15 +78,11 @@ const Home = () => {
 
     try {
       const response = await axios.post("http://localhost:8080/api/posts", formData);
-      alert("Post uploaded successfully!");
-      setPosts((prev) => [response.data, ...prev]); // Add new post to top
-
-      // Reset modal
+      setPosts((prev) => [response.data, ...prev]);
       setIsModalOpen(false);
       setPostText("");
       setFiles([]);
     } catch (err) {
-      alert("Error posting. See console.");
       console.error("Error posting:", err);
     }
   };
@@ -112,6 +98,7 @@ const Home = () => {
         <div className="DASM-middle-section">
           <div className="DASM-create-post" onClick={() => setIsModalOpen(true)}>
             <img src="images/profilepic1.jpeg" alt="Profile" className="DASM-profile-pic" />
+            
             <input type="text" placeholder="Start a post" className="DASM-post-input" readOnly />
             <div className="DASM-post-buttons">
               <button className="DASM-media-button">📷 Media</button>
@@ -126,7 +113,7 @@ const Home = () => {
                 key={post.id}
                 post={post}
                 onDelete={handleDelete}
-                onUpdate={handleEdit} // Pass handleEdit for update functionality
+                onUpdate={handleEdit}
               />
             ))}
           </div>
