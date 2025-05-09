@@ -7,6 +7,7 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.LearningProgressUpdateRepo;
 import com.example.demo.service.LearningProgressUpdateService;
 
+import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +18,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.MediaType;
+
+import org.springframework.http.HttpHeaders;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,9 +62,25 @@ public class LearningProgressController {
         }
     }
 
-    @PostMapping
+    @GetMapping("/download/{progressId}")
+    public ResponseEntity<byte[]> downloadAttachment(@PathVariable String progressId) {
+        LearningProgressUpdate progress = progressUpdateRepo.findById(progressId).orElse(null);
+
+        if (progress == null || progress.getAttachment() == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + progress.getAttachmentName() + "\"")
+                .contentType(MediaType.parseMediaType(progress.getAttachmentType()))
+                .body(progress.getAttachment().getData());
+    }
+
+    @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<LearningProgressUpdate> createProgressUpdate(
-            @RequestBody LearningProgressUpdateRequest request) {
+            @RequestPart("data") LearningProgressUpdateRequest request,
+            @RequestPart(value = "attachment", required = false) MultipartFile attachment) {
         try {
             LearningProgressUpdate progressUpdate = new LearningProgressUpdate();
             progressUpdate.setProgressId(request.getProgressId());
@@ -69,25 +91,25 @@ public class LearningProgressController {
             progressUpdate.setDifficultyLevel(request.getDifficultyLevel());
             progressUpdate.setSkillCat(request.getSkillCat());
             progressUpdate.setCourseRate(request.getCourseRate());
-            progressUpdate.setMediaUrl(request.getMediaUrl());
 
-            List<String> skillsList = request.getSkillsLearned();
-            if(skillsList == null){
-                skillsList = new ArrayList<>();
+            progressUpdate.setSkillsLearned(
+                    request.getSkillsLearned() != null ? request.getSkillsLearned() : new ArrayList<>());
+            progressUpdate.setAchMilestone(
+                    request.getAchMilestone() != null ? request.getAchMilestone() : new ArrayList<>());
+
+            // Store the file in MongoDB as binary
+            if (attachment != null && !attachment.isEmpty()) {
+                progressUpdate.setAttachment(new Binary(attachment.getBytes()));
+                progressUpdate.setAttachmentName(attachment.getOriginalFilename());
+                progressUpdate.setAttachmentType(attachment.getContentType());
             }
 
-            List<String> achivList = request.getSkillsLearned();
-            if(achivList == null){
-                achivList = new ArrayList<>();
-            }
-
-            progressUpdate.setSkillsLearned(skillsList);
-            progressUpdate.setAchMilestone(achivList);
-            
             progressUpdateRepo.save(progressUpdate);
             return ResponseEntity.ok(progressUpdate);
+
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(null); // Handle error case
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(null);
         }
     }
 
@@ -110,12 +132,12 @@ public class LearningProgressController {
             exisprogressUpdate.setMediaUrl(request.getMediaUrl());
 
             List<String> skillsList = request.getSkillsLearned();
-            if(skillsList == null){
+            if (skillsList == null) {
                 skillsList = new ArrayList<>();
             }
 
             List<String> achivList = request.getSkillsLearned();
-            if(achivList == null){
+            if (achivList == null) {
                 achivList = new ArrayList<>();
             }
             exisprogressUpdate.setSkillsLearned(skillsList);
