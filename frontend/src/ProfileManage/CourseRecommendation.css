@@ -1,0 +1,61 @@
+.course-recommendations {
+    margin-top: 20px;
+    font-family: 'Roboto', sans-serif;
+    padding: 10px 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .course-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .course-item {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #81cec9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .course-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .course-badge {
+    font-size: 12px;
+    background-color: #033934;
+    color: white;
+    padding: 3px 6px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .course-link {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .course-link:hover {
+    color: #005f8d;
+  }
+  
+  .course-skill {
+    font-size: 14px;
+    color:white;
+    margin-top: 5px;
+  }
+  
+  .no-recommendations {
+    font-size: 16px;
+    color: #555;
+    text-align: center;
+  }
+  

@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Navigationbar from "../../SharedComponents/Navigationbar"; // Corrected import
-
-
 import "../styles/styles.css";
 import Post from "../components/Post";
 import LeftSection from "../components/LeftSection";
@@ -13,8 +10,9 @@ const Home = () => {
   const [postText, setPostText] = useState("");
   const [files, setFiles] = useState([]);
   const [posts, setPosts] = useState([]);
-  const [editingPost, setEditingPost] = useState(null); // Track which post is being edited
+  const [editingPost, setEditingPost] = useState(null);
 
+  // Fetch posts on component mount
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -28,10 +26,12 @@ const Home = () => {
     fetchPosts();
   }, []);
 
+  // Handle delete post
   const handleDelete = (deletedId) => {
     setPosts((prev) => prev.filter((post) => post._id !== deletedId));
   };
 
+  // Handle update post
   const handleUpdatePost = async (updatedPost) => {
     try {
       const formData = new FormData();
@@ -60,13 +60,15 @@ const Home = () => {
     }
   };
 
+  // Open modal for editing a post
   const handleEdit = (post) => {
     setEditingPost(post);
     setPostText(post.description);
-    setFiles(post.imageUrls); // Assuming images are handled
+    setFiles(post.imageUrls || []); // Assuming images are handled
     setIsModalOpen(true);
   };
 
+  // Handle file input change
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
     if (selectedFiles.length > 3) {
@@ -76,6 +78,7 @@ const Home = () => {
     setFiles(selectedFiles);
   };
 
+  // Handle post submission (new post)
   const handlePostSubmit = async () => {
     const formData = new FormData();
     formData.append("username", "Dasuni");
@@ -103,7 +106,8 @@ const Home = () => {
 
   return (
     <div>
-      <Navigationbar />
+      {/* <Navigationbar /> */}
+
       <div className="DASM-home-container">
         <div className="DASM-left-section">
           <LeftSection />
@@ -121,20 +125,25 @@ const Home = () => {
           </div>
 
           <div className="DASM-posts-container">
-            {posts.map((post) => (
-              <Post
-                key={post.id}
-                post={post}
-                onDelete={handleDelete}
-                onUpdate={handleEdit} // Pass handleEdit for update functionality
-              />
-            ))}
+            {posts.length === 0 ? (
+              <p>No posts available.</p>
+            ) : (
+              posts.map((post) => (
+                <Post
+                  key={post._id} // Ensuring unique key
+                  post={post}
+                  onDelete={handleDelete}
+                  onUpdate={handleEdit} // Pass handleEdit for update functionality
+                />
+              ))
+            )}
           </div>
         </div>
 
         <RightSection />
       </div>
 
+      {/* Modal for creating/editing posts */}
       {isModalOpen && (
         <div className="DASM-modal-overlay">
           <div className="DASM-modal-content">

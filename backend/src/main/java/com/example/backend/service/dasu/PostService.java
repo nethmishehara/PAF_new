@@ -19,20 +19,23 @@ public class PostService {
 
     private final String uploadDir = "uploads/";
 
-    public ResponseEntity<?> createPost(String username, String profilePic, String description, List<MultipartFile> imageFiles) {
+    // Create a new post
+    public ResponseEntity<?> createPost(String userId, String username, String profilePic, String description, List<MultipartFile> imageFiles) {
         try {
             File uploadPath = new File(uploadDir);
             if (!uploadPath.exists()) uploadPath.mkdirs();
 
             List<String> imagePaths = new ArrayList<>();
-            for (MultipartFile file : imageFiles) {
-                String fileName = System.currentTimeMillis() + "-" + file.getOriginalFilename();
-                Path destination = Paths.get(uploadDir, fileName);
-                Files.write(destination, file.getBytes());
-                imagePaths.add("/uploads/" + fileName);
+            if (imageFiles != null) {
+                for (MultipartFile file : imageFiles) {
+                    String fileName = System.currentTimeMillis() + "-" + file.getOriginalFilename();
+                    Path destination = Paths.get(uploadDir, fileName);
+                    Files.write(destination, file.getBytes());
+                    imagePaths.add("/uploads/" + fileName);
+                }
             }
 
-            Post post = new Post(username, profilePic, description, imagePaths);
+            Post post = new Post(userId, username, profilePic, description, imagePaths);
             postRepository.save(post);
             return ResponseEntity.ok(post);
         } catch (Exception e) {
@@ -41,11 +44,18 @@ public class PostService {
         }
     }
 
+    // Get all posts
     public List<Post> getAllPosts() {
         return postRepository.findAll();
     }
 
-    public ResponseEntity<?> updatePost(String id, String username, String profilePic, String description, List<MultipartFile> imageFiles) {
+    // Get a specific post by its ID
+    public Optional<Post> getPostById(String postId) {
+        return postRepository.findById(postId);
+    }
+
+    // Update an existing post
+    public ResponseEntity<?> updatePost(String id, String userId, String username, String profilePic, String description, List<MultipartFile> imageFiles) {
         try {
             Optional<Post> optionalPost = postRepository.findById(id);
             if (optionalPost.isEmpty()) {
@@ -53,11 +63,13 @@ public class PostService {
             }
 
             Post post = optionalPost.get();
+
+            post.setUserId(userId);
             post.setUsername(username);
+            post.setDescription(description);
             if (profilePic != null && !profilePic.isEmpty()) {
                 post.setProfilePic(profilePic);
             }
-            post.setDescription(description);
 
             if (imageFiles != null && !imageFiles.isEmpty()) {
                 File uploadPath = new File(uploadDir);
@@ -82,6 +94,7 @@ public class PostService {
         }
     }
 
+    // Delete a post
     public ResponseEntity<?> deletePost(String id) {
         try {
             Optional<Post> optionalPost = postRepository.findById(id);
