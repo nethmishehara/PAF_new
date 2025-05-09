@@ -16,13 +16,20 @@ const CommentSection = ({ postId, currentUserId, postOwnerId }) => {
   const fetchComments = async () => {
     try {
       const res = await axios.get(`/api/comments/post/${postId}`);
-      setComments(res.data);
+      const fetchedComments = res.data;
+      setComments(fetchedComments);
 
+      const likePromises = fetchedComments.map((comment) =>
+        axios
+          .get(`/api/likes/comment/${comment.id}/user/${currentUserId}`)
+          .then((likeRes) => ({ id: comment.id, liked: likeRes.data }))
+      );
+
+      const results = await Promise.all(likePromises);
       const likedMap = {};
-      for (const comment of res.data) {
-        const likeRes = await axios.get(`/api/likes/comment/${comment.id}/user/${currentUserId}`);
-        likedMap[comment.id] = likeRes.data;
-      }
+      results.forEach(({ id, liked }) => {
+        likedMap[id] = liked;
+      });
       setLikedComments(likedMap);
     } catch (err) {
       console.error("Error fetching comments", err);
@@ -46,8 +53,9 @@ const CommentSection = ({ postId, currentUserId, postOwnerId }) => {
           type: "COMMENT",
         });
       }
-      fetchComments();
+
       setNewComment("");
+      fetchComments();
     } catch (err) {
       console.error("Error adding comment:", err);
     }
@@ -85,15 +93,15 @@ const CommentSection = ({ postId, currentUserId, postOwnerId }) => {
   };
 
   const handleToggleLike = async (commentId) => {
+    const isLiked = likedComments[commentId];
     try {
-      const isLiked = likedComments[commentId];
       if (isLiked) {
         await axios.delete(`/api/likes/comment/${commentId}/user/${currentUserId}`);
       } else {
         await axios.post(`/api/likes/comment/${commentId}/user/${currentUserId}`);
 
-        // Send notification to comment owner (if not the one liking)
-        const comment = comments.find(c => c.id === commentId);
+        // Notify comment owner
+        const comment = comments.find((c) => c.id === commentId);
         if (comment && comment.userId !== currentUserId) {
           await axios.post("/api/notifications/create", {
             recipientUserId: comment.userId,
@@ -103,7 +111,12 @@ const CommentSection = ({ postId, currentUserId, postOwnerId }) => {
           });
         }
       }
-      fetchComments();
+
+      // Update only the liked state locally instead of refetching
+      setLikedComments((prev) => ({
+        ...prev,
+        [commentId]: !isLiked,
+      }));
     } catch (err) {
       console.error("Error toggling like", err);
     }
@@ -136,16 +149,25 @@ const CommentSection = ({ postId, currentUserId, postOwnerId }) => {
               </div>
               <p className="comment-content">{comment.content}</p>
               <div className="comment-actions">
-                <button onClick={() => handleToggleLike(comment.id)} className="btn like">
+                <button
+                  onClick={() => handleToggleLike(comment.id)}
+                  className="btn like"
+                >
                   {likedComments[comment.id] ? "💙" : "🤍"} Like
                 </button>
                 {comment.userId === currentUserId && (
-                  <button onClick={() => handleEditClick(comment.id, comment.content)} className="btn edit">
+                  <button
+                    onClick={() => handleEditClick(comment.id, comment.content)}
+                    className="btn edit"
+                  >
                     ✏️ Edit
                   </button>
                 )}
                 {(comment.userId === currentUserId || postOwnerId === currentUserId) && (
-                  <button onClick={() => handleDeleteComment(comment)} className="btn delete">
+                  <button
+                    onClick={() => handleDeleteComment(comment)}
+                    className="btn delete"
+                  >
                     🗑️ Delete
                   </button>
                 )}

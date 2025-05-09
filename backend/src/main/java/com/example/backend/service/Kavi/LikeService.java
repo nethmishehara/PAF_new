@@ -3,9 +3,11 @@ package com.example.backend.service.Kavi;
 import com.example.backend.model.Kavi.Comment;
 import com.example.backend.model.Kavi.Like;
 import com.example.backend.model.Kavi.Notification;
+import com.example.backend.model.dasu.Post;
 import com.example.backend.repository.Kavi.CommentRepository;
 import com.example.backend.repository.Kavi.LikeRepository;
 import com.example.backend.repository.Kavi.NotificationRepository;
+import com.example.backend.repository.dasu.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,18 +21,21 @@ public class LikeService {
     private CommentRepository commentRepository;
 
     @Autowired
+    private PostRepository postRepository;
+
+    @Autowired
     private NotificationRepository notificationRepository;
 
     // ✅ Toggle comment like (add/remove)
     public boolean toggleCommentLike(String commentId, String userId) {
         if (likeRepository.existsByCommentIdAndUserId(commentId, userId)) {
-            // If already liked, remove like
+            // Remove existing like
             Like like = likeRepository.findByCommentIdAndUserId(commentId, userId)
                     .orElseThrow(() -> new RuntimeException("Like not found"));
             likeRepository.delete(like);
-            return false; // Now unliked
+            return false;
         } else {
-            // Add like
+            // Add new like
             Comment comment = commentRepository.findById(commentId)
                     .orElseThrow(() -> new RuntimeException("Comment not found"));
 
@@ -39,6 +44,7 @@ public class LikeService {
             like.setUserId(userId);
             likeRepository.save(like);
 
+            // Notify comment owner if liker is not the same
             String commentOwnerId = comment.getUserId();
             if (!commentOwnerId.equals(userId)) {
                 Notification notification = new Notification();
@@ -52,7 +58,7 @@ public class LikeService {
                 notificationRepository.save(notification);
             }
 
-            return true; // Now liked
+            return true;
         }
     }
 
@@ -71,6 +77,23 @@ public class LikeService {
         like.setPostId(postId);
         like.setUserId(userId);
         likeRepository.save(like);
+
+        // Notify post owner if liker is not the same
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        String postOwnerId = post.getUserId();
+        if (!postOwnerId.equals(userId)) {
+            Notification notification = new Notification();
+            notification.setRecipientUserId(postOwnerId);
+            notification.setActorUserId(userId);
+            notification.setPostId(postId);
+            notification.setMessage("Your post was liked by " + userId);
+            notification.setType("like");
+            notification.setUserId(postOwnerId);
+            notification.setRead(false);
+            notificationRepository.save(notification);
+        }
     }
 
     // ✅ Unlike a post
