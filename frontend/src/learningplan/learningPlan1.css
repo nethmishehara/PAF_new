@@ -15,16 +15,6 @@
 }
 
 
-/* Main Dashboard Container */
-/* .lpbuttondashboard {
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  max-width: 900px;
-  margin: 40px auto;
-  text-align: center;
-} */
 
 /* Header Style */
 .lph1 {
@@ -44,7 +34,7 @@
 
 /* Add New Plan Button */
 .addnewplan.btn {
-  background: linear-gradient(145deg, #6f6ff5, #4e4ef7); /* Gradient for button */
+  background: linear-gradient(145deg, #6f6ff5, #006D77); /* Gradient for button */
   color: #fff;
   padding: 15px 30px;
   font-size: 18px;
@@ -119,28 +109,7 @@
   border-color: #210000;
 }
 
-/* .button-container {
-  display: flex;
-  justify-content: flex-start;
-  gap: 15px;
-  margin-top: 20px;
-}
 
-.button-container button {
-  background-color: #007bff;
-  color: white;
-  font-size: 16px;
-  padding: 10px 25px;
-  border-radius: 6px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.button-container button:hover {
-  background-color: #0056b3;
-} */
-
-/* Saved Learning Plans List */
-/* Saved Learning Plans List */
 .savedlplist {
   margin-top: 20px;
   max-width: 1500px;
@@ -200,40 +169,11 @@
   border-radius: 6px;
 }
 
-/* .savedlplist li .action-buttons {
-  display: flex;
-  gap: 15px;
-} */
 
-/* .savedlplist li .action-buttons button {
-  background-color: #007bff;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-} */
-/* 
-.savedlplist li .action-buttons button:hover {
-  background-color: #0056b3; /* Darker blue on hover 
-  transform: translateY(-2px);  
-} */
-
-/* .savedlplist li .action-buttons button:active {
-  transform: translateY(2px); /* Button presses down when clicked 
-} */
-
-/* .savedlplist li .action-buttons button:disabled {
-  background-color: #b8daff;
-  cursor: not-allowed;
-} */
 
 /* Plan Action Buttons */
 .plan-actions button {
-  background-color: #007bff;
+  background-color: #006D77;
   color: white;
   margin-right: 10px;
   padding: 8px 16px;
@@ -241,7 +181,7 @@
 }
 
 .plan-actions button:last-child {
-  background-color: #dc3545;
+  background-color: #b34c56;
 }
 
 .plan-actions button:hover {
@@ -356,7 +296,7 @@
 
 /* Hover effect for label */
 .lppopup-form label:hover {
-  color: #007bff; /* Blue color for a professional and interactive feel */
+  color: #006D77; /* Blue color for a professional and interactive feel */
 }
 
 
@@ -444,7 +384,7 @@
 
 /* Save Button Styling */
 .lppopup-form button:nth-child(1) {
-  background-color: #28a745;
+  background-color: #48d569;
   color: white;
   width: 48%;
   padding: 12px;
@@ -610,3 +550,50 @@
   align-items: center;
   gap: 10px;
 }
+.celebration-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-content {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  text-align: center;
+  animation: popupFade 0.5s ease-in-out;
+  box-shadow: 0 0 15px gold;
+}
+
+.popup-content h2 {
+  color: green;
+  font-size: 2rem;
+}
+
+@keyframes popupFade {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.congratz {
+  background-color: #006D77;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.congratz:hover {
+  background-color: #00565F;
+}
+ 
